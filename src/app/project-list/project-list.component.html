@@ -1,0 +1,83 @@
+<mat-card class="project-card">
+  <mat-card-content>
+    <!-- Create Project Form -->
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Project Name</mat-label>
+        <input
+          matInput
+          [(ngModel)]="newProject.name"
+          placeholder="e.g., UGA Sustainability"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <input
+          matInput
+          [(ngModel)]="newProject.description"
+          placeholder="Brief description"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Carbon Budget</mat-label>
+        <input
+          matInput
+          type="number"
+          [(ngModel)]="newProject.carbonBudget"
+          placeholder="e.g., 100"
+        />
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" (click)="createProject()">
+        <mat-icon>add</mat-icon> Create Project
+      </button>
+    </div>
+
+    <!-- Project List -->
+    <mat-list>
+      <mat-list-item
+        *ngFor="let p of projects"
+        (click)="selectProject(p.id)"
+        [class.selected]="selectedProjectId === p.id"
+      >
+        <mat-icon matListIcon>folder</mat-icon>
+        <div matLine>
+          <strong>{{ p.name }}</strong>
+        </div>
+        <div matLine>Budget: {{ p.carbonBudget }} | {{ p.description }}</div>
+
+        <!-- Action buttons wrapper -->
+        <div class="action-buttons">
+          <button
+            mat-icon-button
+            color="primary"
+            (click)="editProject(p, $event)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="warn"
+            (click)="deleteProject(p.id, $event)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="accent"
+            *ngIf="selectedProjectId !== p.id"
+          >
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
+
+<app-task-list
+  *ngIf="selectedProjectId"
+  [projectId]="selectedProjectId"
+></app-task-list>

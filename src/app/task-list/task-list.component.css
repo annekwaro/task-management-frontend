@@ -1,0 +1,36 @@
+.task-card {
+  margin-top: 24px;
+  border-radius: 12px;
+}
+
+.budget-info {
+  margin: 20px 0;
+}
+
+.budget-info span {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: baseline;
+  margin: 24px 0;
+}
+
+.form-row mat-form-field {
+  flex: 1 1 180px;
+}
+
+.table-container {
+  overflow-x: auto;
+  margin-top: 24px;
+}
+
+mat-chip {
+  font-size: 12px;
+  padding: 4px 12px;
+}

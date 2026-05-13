@@ -1,0 +1,132 @@
+<mat-card class="task-card">
+  <mat-card-title>Tasks for {{ project?.name }}</mat-card-title>
+  <mat-card-content>
+    <!-- Carbon Budget Progress -->
+    <div class="budget-info">
+      <span>Carbon used: {{ totalCarbon }} / {{ project?.carbonBudget }}</span>
+      <mat-progress-bar
+        mode="determinate"
+        [value]="(totalCarbon / (project?.carbonBudget || 1)) * 100"
+        [color]="
+          totalCarbon / (project?.carbonBudget || 1) > 1 ? 'warn' : 'primary'
+        "
+      >
+      </mat-progress-bar>
+    </div>
+
+    <!-- Create Task Form -->
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Task Title</mat-label>
+        <input
+          matInput
+          [(ngModel)]="newTask.title"
+          placeholder="e.g., Write report"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Carbon Impact</mat-label>
+        <mat-select [(ngModel)]="newTask.carbonImpact">
+          <mat-option value="LOW">Low (1 pt)</mat-option>
+          <mat-option value="MEDIUM">Medium (2 pts)</mat-option>
+          <mat-option value="HIGH">High (3 pts)</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Business Value</mat-label>
+        <mat-select [(ngModel)]="newTask.businessValue">
+          <mat-option value="HIGH">High (3 pts)</mat-option>
+          <mat-option value="MEDIUM">Medium (2 pts)</mat-option>
+          <mat-option value="LOW">Low (1 pt)</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" (click)="createTask()">
+        <mat-icon>add_task</mat-icon> Add Task
+      </button>
+    </div>
+
+    <!-- Tasks Table -->
+    <div class="table-container">
+      <table mat-table [dataSource]="tasks" class="mat-elevation-z2">
+        <!-- Title Column -->
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef>Title</th>
+          <td mat-cell *matCellDef="let task">{{ task.title }}</td>
+        </ng-container>
+
+        <!-- Carbon Column -->
+        <ng-container matColumnDef="carbonImpact">
+          <th mat-header-cell *matHeaderCellDef>Carbon Impact</th>
+          <td mat-cell *matCellDef="let task">
+            <mat-chip
+              [color]="
+                task.carbonImpact === 'LOW'
+                  ? 'primary'
+                  : task.carbonImpact === 'MEDIUM'
+                  ? 'accent'
+                  : 'warn'
+              "
+              highlighted
+            >
+              {{ task.carbonImpact }}
+            </mat-chip>
+          </td>
+        </ng-container>
+
+        <!-- Value Column -->
+        <ng-container matColumnDef="businessValue">
+          <th mat-header-cell *matHeaderCellDef>Business Value</th>
+          <td mat-cell *matCellDef="let task">
+            <mat-chip
+              [color]="
+                task.businessValue === 'HIGH'
+                  ? 'primary'
+                  : task.businessValue === 'MEDIUM'
+                  ? 'accent'
+                  : 'warn'
+              "
+              highlighted
+            >
+              {{ task.businessValue }}
+            </mat-chip>
+          </td>
+        </ng-container>
+
+        <!-- Ratio Column -->
+        <ng-container matColumnDef="ratio">
+          <th mat-header-cell *matHeaderCellDef>Carbon/Value Ratio</th>
+          <td mat-cell *matCellDef="let task">
+            {{ getRatio(task) | number : "1.2-2" }}
+          </td>
+        </ng-container>
+
+        <!-- Actions Column (Edit/Delete) -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let task">
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="editTask(task); $event.stopPropagation()"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="deleteTask(task.id); $event.stopPropagation()"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </mat-card-content>
+</mat-card>

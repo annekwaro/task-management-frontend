@@ -1,1 +1,44 @@
-/* You can add global styles to this file, and also import other style files */
+/* Improve form row spacing */
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+  margin-bottom: 1.5rem;
+}
+.form-row mat-form-field {
+  flex: 1 1 200px;
+}
+
+/* Make project list items more compact */
+mat-list-item {
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+}
+mat-list-item .mat-line {
+  white-space: normal !important;
+  word-break: break-word;
+}
+
+/* Task table responsiveness */
+.table-container {
+  overflow-x: auto;
+}
+.mat-table {
+  min-width: 600px;
+}
+
+/* Budget info spacing */
+.budget-info {
+  margin: 1rem 0;
+}
+.budget-info span {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+/* Action buttons in table */
+.mat-column-actions {
+  text-align: center;
+  width: 80px;
+}

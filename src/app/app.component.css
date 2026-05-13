@@ -1,0 +1,31 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f4f4f4;
+}
+.budget-bar {
+  background: #ddd;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+.budget-fill {
+  background: green;
+  height: 20px;
+  border-radius: 5px;
+  width: 0%;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+th,
+td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+th {
+  background: #4caf50;
+  color: white;
+}
